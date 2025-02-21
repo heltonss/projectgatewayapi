@@ -1,44 +1,46 @@
 package com.trabalhoapigateway.store.domain;
 
-public class Componente {
-    private Integer id;
-    private long codigo;
-    private String SKU;
-    private String descricao;
-    private Double preco;
-    private Integer quantidade;
+import java.util.UUID;
 
-    public Componente(Integer id, Long codigo, String SKU, String descricao, Double preco, Integer quantidade) {
+public class Componente {
+    private UUID id;
+    private UUID codigo;
+    private String sku;
+    private String descricao;
+    private double preco;
+    private int quantidade;
+
+    public Componente(UUID id, UUID codigo, String sku, String descricao, double preco, int quantidade) {
         this.id = id;
         this.codigo = codigo;
-        this.SKU = SKU;
+        this.sku = sku;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public long getCodigo() {
+    public UUID getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(UUID codigo) {
         this.codigo = codigo;
     }
 
-    public String getSKU() {
-        return SKU;
+    public String getSku() {
+        return sku;
     }
 
-    public void setSKU(String SKU) {
-        this.SKU = SKU;
+    public void setsku(String sku) {
+        this.sku = sku;
     }
 
     public String getDescricao() {
@@ -49,19 +51,19 @@ public class Componente {
         this.descricao = descricao;
     }
 
-    public Double getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
-    public Integer getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Integer quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 }
