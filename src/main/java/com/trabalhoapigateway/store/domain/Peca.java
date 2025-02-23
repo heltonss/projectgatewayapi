@@ -4,10 +4,10 @@ import java.util.UUID;
 
 public class Peca {
     private UUID id;
-    private UUID codigo;
+    private Integer codigo;
     private String nome;
 
-    public Peca(UUID id, UUID codigo, String nome) {
+    public Peca(UUID id, Integer codigo, String nome) {
         this.id = id;
         this.codigo = codigo;
         this.nome = nome;
@@ -21,11 +21,11 @@ public class Peca {
         this.id = id;
     }
 
-    public UUID getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(UUID codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

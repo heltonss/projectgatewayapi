@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class Componente {
     private UUID id;
-    private UUID codigo;
+    private Integer codigo;
     private String sku;
     private String descricao;
     private double preco;
     private int quantidade;
 
-    public Componente(UUID id, UUID codigo, String sku, String descricao, double preco, int quantidade) {
+    public Componente(UUID id, Integer codigo, String sku, String descricao, double preco, int quantidade) {
         this.id = id;
         this.codigo = codigo;
         this.sku = sku;
@@ -27,11 +27,11 @@ public class Componente {
         this.id = id;
     }
 
-    public UUID getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(UUID codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

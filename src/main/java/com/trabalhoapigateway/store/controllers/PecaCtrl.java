@@ -4,8 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trabalhoapigateway.store.services.PecaServices;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trabalhoapigateway.store.domain.Componente;
 import com.trabalhoapigateway.store.domain.Peca;
+import com.trabalhoapigateway.store.utils.ExceptionMessage;
+import com.trabalhoapigateway.store.utils.ExceptionMessageJson;
 import com.trabalhoapigateway.store.utils.VersionApi;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,22 +29,30 @@ public class PecaCtrl {
 
     @Autowired
     private PecaServices pecaServices;
+    ObjectMapper objectMapper = new ObjectMapper();
+
 
     public PecaCtrl(PecaServices pecaService) {
         this.pecaServices = pecaService;
     }
 
     @PostMapping("")
-    public ResponseEntity<Peca> createPeca(@RequestBody Peca body) {
+    public ResponseEntity<?> createPeca(@RequestBody Peca body) {
         UUID id = UUID.randomUUID();
-        UUID codigo = UUID.randomUUID();
-        var peca =  new Peca(id, codigo, body.getNome());
+        var peca =  new Peca(id, body.getCodigo(), body.getNome());
         try {
             this.pecaServices.addPeca(peca);
         } catch (Exception e) {
-            return new ResponseEntity<Peca>(peca, HttpStatus.BAD_REQUEST);
+          String m =  new ExceptionMessageJson(e.getMessage()).getMessage();
+            try {
+                ExceptionMessage errorResponse = objectMapper.readValue(m, ExceptionMessage.class);
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(errorResponse);
+            } catch (JsonProcessingException jsonException) {
+                 throw new RuntimeException(jsonException);
+            }
         }
-        return new ResponseEntity<Peca>(peca, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(peca);
     }
    
 
