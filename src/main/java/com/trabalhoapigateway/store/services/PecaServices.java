@@ -15,19 +15,6 @@ public class PecaServices {
   private List<Peca> pecas = new ArrayList<>();
   private List<Componente> componentes = new ArrayList<>();
 
-  public boolean addComponenteToPeca(Integer pecaCodigo, Componente componente) {
-    Optional<Peca> pecaOptional = pecas.stream()
-        .filter(peca -> peca.getCodigo().equals(pecaCodigo))
-        .findFirst();
-
-    if (pecaOptional.isPresent()) {
-      componentes.add(componente);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public PecaServices() {
     // Mock data for Peca
     Integer codeA = 001;
@@ -49,8 +36,17 @@ public class PecaServices {
     return pecas;
   }
 
-  public List<Componente> getComponentes() {
-    return componentes;
+  public List<Componente> getComponentesByIdPeca(Integer codigo) {
+    List<Componente> comp =  componentes.stream()
+        .filter(c -> c.getCodigo().equals(codigo))
+        .toList();
+
+    if (comp.size() == 0) {
+      throw new IllegalArgumentException("Peça inexistente, não é possível retornar componentes.");
+    } else {
+      return comp;
+      
+    }
   }
 
   public void addPeca(Peca peca) {
@@ -65,6 +61,25 @@ public class PecaServices {
               pecas.add(peca);
             });
 
-    
+  }
+
+  public Peca getPecaById(Integer codigo) {
+    return pecas.stream()
+        .filter(p -> p.getCodigo().equals(codigo))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Peça inexistente."));
+  }
+
+  public void addComponenteToPeca(Integer codigo, Componente componente) {
+    pecas.stream()
+        .filter(p -> p.getCodigo().equals(codigo))
+        .findFirst()
+        .ifPresentOrElse(p -> {
+          componentes.add(componente);
+        },
+            () -> {
+              throw new IllegalArgumentException("Não é possível adicionar componente, peça inexistente.");
+            });
+
   }
 }
