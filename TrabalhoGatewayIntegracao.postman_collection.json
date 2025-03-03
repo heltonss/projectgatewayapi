@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "37249bb5-a7db-4f4a-857e-d8aaec35442a",
+		"name": "TrabalhoGatewayIntegracao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "41800746"
+	},
+	"item": [
+		{
+			"name": "javaapi",
+			"item": [
+				{
+					"name": "testeapionline",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/pecas/4342/componentes"
+					},
+					"response": []
+				},
+				{
+					"name": "peca",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigo\": 10,\n    \"nome\": \"peca criada pela api\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/pecas"
+					},
+					"response": []
+				},
+				{
+					"name": "pecas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/pecas"
+					},
+					"response": []
+				},
+				{
+					"name": "pecas by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/pecas/10"
+					},
+					"response": []
+				},
+				{
+					"name": "componentes",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true,
+							"accept-encoding": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"ABC-235\",\n    \"descricao\": \"Componente criada pela api\",\n    \"preco\": 9.90,\n    \"quantidade\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/pecas/11/componentes"
+					},
+					"response": []
+				},
+				{
+					"name": "componentes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/pecas/10/componentes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "konggateway",
+			"item": [
+				{
+					"name": "creategatewayteste",
+					"item": [
+						{
+							"name": "create service",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"example_service\",\n    \"retries\": 3,\n    \"protocol\": \"http\",\n    \"host\": \"host.docker.internal\",\n    \"path\": \"/api/v1/pecas\",\n    \"port\": 8080,\n    \"tags\": [\n        \"services\",\n        \"peca-services\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8001/services"
+							},
+							"response": []
+						},
+						{
+							"name": "delete service",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8001/services/example_service"
+							},
+							"response": []
+						},
+						{
+							"name": "delete service",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8001/services"
+							},
+							"response": []
+						},
+						{
+							"name": "post route",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"my-route-teste\",\n  \"protocols\": [\n    \"http\",\n    \"https\"\n  ],\n  \"methods\": [\n    \"GET\",\n    \"POST\"\n  ],\n  \"hosts\": [\n    \"localhost\"\n  ],\n  \"paths\": [\n    \"/v1/gateway/pecas\"\n  ],\n  \"https_redirect_status_code\": 426,\n  \"regex_priority\": 0,\n  \"strip_path\": false,\n  \"path_handling\": \"v0\",\n  \"preserve_host\": false,\n  \"request_buffering\": true,\n  \"response_buffering\": true,\n  \"tags\": [\n    \"route-pecas\"\n  ],\n  \"service\": {\n    \"id\": \"f97ea785-2047-4e4e-9382-46095bb94c83\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8001/routes"
+							},
+							"response": []
+						},
+						{
+							"name": "get routes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8001/services"
+							},
+							"response": []
+						},
+						{
+							"name": "testegateway",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000//v1/testegateway/pecas"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8000/v1/gateway/pecas"
+					},
+					"response": []
+				},
+				{
+					"name": "gateway/pecas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8000/v1/gateway/pecas"
+					},
+					"response": []
+				},
+				{
+					"name": "gateway/pecas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigo\": 16,\n    \"nome\": \"peca criada pela gateway\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/v1/gateway/pecas"
+					},
+					"response": []
+				},
+				{
+					"name": "newgateway/pecas retorna post sem o id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"codigo\": 16,\n    \"nome\": \"peca criada pelo gateway\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/v1/newgateway"
+					},
+					"response": []
+				},
+				{
+					"name": "gateway/pecas by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "gateway/componentes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"ABC-235\",\n    \"descricao\": \"Componente criada pelo gateway\",\n    \"preco\": 9.90,\n    \"quantidade\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/v1/gateway/pecas/4/componentes"
+					},
+					"response": []
+				},
+				{
+					"name": "gateway/componentes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8000/v1/gateway/pecas/16/componentes"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
