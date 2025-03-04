@@ -1,4 +1,5 @@
 #!/bin/bash
 
-./gradlew build --continuous & ./gradlew bootRun
- 
+./gradlew bootRun &
+echo $! > bootrun.pid
+wait $! 
